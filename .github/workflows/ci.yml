@@ -1,0 +1,32 @@
+name: CivicConnect CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  ci-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies (Root & Workspaces)
+        run: npm install
+
+      - name: Run backend tests
+        run: npm test
+
+      - name: Build frontend
+        run: npm run build
+
+      - name: Check JavaScript syntax
+        run: find backend/src backend/scripts backend/test -name '*.js' -print0 | xargs -0 -n1 node --check
