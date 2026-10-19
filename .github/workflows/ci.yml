@@ -1,4 +1,5 @@
-ame: CivicConnect CI
+
+name: CivicConnect CI
 
 on:
   pull_request:
